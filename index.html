@@ -52,7 +52,9 @@
             w3cid: 41758
           }, { name: "Michael B. Jones", url: "https://self-issued.info/",
             company: "Invited Expert",
-            w3cid: 38745}],
+            w3cid: 38745},{
+              name: "曾毅（中文翻译）", url: "https://github.com/studyzy/",
+              company: "深蓝居", companyURL: "https://www.cnblogs.com/studyzy", w3cid: 99999999 }],
 
           // authors, add as many as you like.
           // This is optional, uncomment if you have authors as well as editors.
@@ -158,7 +160,13 @@
               ],
               date: "2011",
               publisher: "Information and Privacy Commissioner"
-            }
+            },
+              "VC":{
+                  title:    "The Verifiable Credentials Working Group",
+                  href:"https://studyzy.github.io/vc-data-model/",
+                  status:   "WD",
+                  publisher:  "W3C Verifiable Credentials Working Group"
+              }
           },
           postProcess: [window.respecVc.createVcExamples],
           otherLinks: [{
@@ -311,7 +319,7 @@ table.simple tbody tr:last-of-type {
           <h4>发布和展示声明</h4>
 
           <p>
-      Neru 希望代表她的公司发布包含关于其员工声明的数字凭证。这些声明需要��用可以加密地归因于 Neru 公司并允许��些凭证持有者在展示凭证时能够加密地验证自己的标识符。
+      Neru 希望代表她的公司发布包含关于其员工声明的数字凭证。这些声明需要使用可以加密地归因于 Neru 公司并允许这些凭证持有者在展示凭证时能够加密地验证自己的标识符。
           </p>
         </section>
 
@@ -333,9 +341,9 @@ table.simple tbody tr:last-of-type {
                <dd>
      能够证明声称控制标识符的实体确实是其控制者。
                </dd>
-               <dt>3. 关��的加密材料</dt>
+               <dt>3. 关联的加密材料</dt>
                <dd>
-     标识符与加密材料紧密耦合，实体可以使用这些材料证明对标识符的控制��。
+     标识符与加密材料紧密耦合，实体可以使用这些材料证明对标识符的控制权。
                </dd>
                <dt>4. 简化的密钥轮换</dt>
                <dd>
@@ -394,7 +402,7 @@ table.simple tbody tr:last-of-type {
       本节定义了本规范中使用的术语。每当这些术语出现在本规范中时，都会包含指向相关定义的链接。
               </p>
 
-              <dl class="termlist definitions" data-sort="ascending">
+              <dl class="termlist definitions">
 
                 <dt><dfn>公钥</dfn></dt>
                 <dd>
@@ -406,7 +414,7 @@ table.simple tbody tr:last-of-type {
       可用于生成[=证明=]的加密材料。
                 </dd>
 
-                <dt><dfn class="export">认证</dfn></dt>
+                <dt><dfn class="export" data-lt="authentication|身份验证">认证</dfn></dt>
                 <dd>
       一种实体可以向验证者证明其拥有特定属性或控制特定秘密的过程。
                 </dd>
@@ -427,7 +435,7 @@ table.simple tbody tr:last-of-type {
       使用特定加密原语实现特定安全目标的方法。这些套件可以指定[=验证方法=]、数字签名类型、它们的标识符以及其他相关属性。
                 </dd>
 
-                <dt><dfn class="export">控制者</dfn></dt>
+                <dt><dfn class="export" data-lt="controller">控制者</dfn></dt>
                 <dd>
                   <p>
       能够对特定资源执行操作的实体，例如更新[=受控标识符文档=]或使用[=验证方法=]生成[=证明=]。
@@ -451,7 +459,7 @@ table.simple tbody tr:last-of-type {
                 <dt><dfn data-lt="subjects">主体</dfn></dt>
                 <dd>
                   <p>
-      一个实体，例如人、群体、组织、物理事物、数字事物或逻辑事物，由[=受控标识符文档=]中的`id`属性值引用。在[=受控标识符文档=]中标识的主体也可在其他上下文中使用，例如在[=认证=]或[=可验证凭证=]中。
+      一个实体，例如人、群体、组织、物理事物、数字事物或逻辑事物，由[=受控标识符文档=]中的`id`属性值引用。在[=受控标识符文档=]中标识的主体也可在其他上下文中使用，例如在[=认证=]或<a data-cite="VC#dfn-vc">可验证凭证</a>中。
                   </p>
                 </dd>
 
@@ -474,7 +482,7 @@ table.simple tbody tr:last-of-type {
     </section>
 
       <section>
-       <h3>数据模型</h3>
+       <h3 id="data-model">数据模型</h3>
 
 <p>
 [=受控标识符文档=]指定了[=标识符=]与一组[=验证方法=]和/或服务端点之间的一种或多种关系。[=受控标识符文档=]应包含[=验证关系=]，明确允许将某些[=验证方法=]用于特定目的。
@@ -524,9 +532,8 @@ table.simple tbody tr:last-of-type {
 <p class="note" title="不同类型映射中使用的属性名称">
 属性名称 `id`、`type` 和 `controller` 可以出现在不同类型的映射中，并可能具有��同的约束。
 </p>
-
-<>
-  <h2>受控标识符文档</h2>
+  <section>
+  <h2 id="controlled-identifier-documents">受控标识符文档</h2>
 
   <p>
 以下部分定义了[=受控标识符文档=]中的属性，包括这些属性是必需的还是可选的。这些属性描述了[=主体=]与属性值之间的关系。
@@ -630,7 +637,7 @@ table.simple tbody tr:last-of-type {
   </table>
 
        <section>
-            <h3>主体</h3>
+            <h3 id="subjects">主体</h3>
             <p>
               [=主体=]通过[=受控标识符文档=]中的`id`属性表示。`id`属性的值被称为<dfn>标识符</dfn>。
             </p>
@@ -660,28 +667,28 @@ table.simple tbody tr:last-of-type {
             </pre>
 
             <p>
-              [=受控标识符文档=]的<em>最顶层</em><a data-cite="INFRA#ordered-map">映射</a>中的`id`属性值被称为[=受控标识符文档=]的<dfn>基础标识符</dfn>。用于检索给定[=标识符=]的当前权威[=受控标识符文档=]的URL被称为[=受控标识符文档=]的<dfn>规范URL</dfn>。解析[=规范URL=]必须���回当前权威[=受控标识符文档=]。返回文档的[=基础标识符=]必须与[=规范URL=]相同；如果不同，则返回的文档不是权威[=受控标识符文档=]，并且[=标识符=]应被视为无效。每个受控标识符文档都根据文档的[=规范URL=]存储和检索，该URL也必须是文档的[=基础标识符=]。
+              [=受控标识符文档=]的<em>最顶层</em><a data-cite="INFRA#ordered-map">映射</a>中的`id`属性值被称为[=受控标识符文档=]的<dfn>基础标识符</dfn>。用于检索给定[=标识符=]的当前权威[=受控标识符文档=]的URL被称为[=受控标识符文档=]的<dfn>规范URL</dfn>。解析[=规范URL=]必须返回当前权威[=受控标识符文档=]。返回文档的[=基础标识符=]必须与[=规范URL=]相同；如果不同，则返回的文档不是权威[=受控标识符文档=]，并且[=标识符=]应被视为无效。每个受控标识符文档都根据文档的[=规范URL=]存储和检索，该URL也必须是文档的[=基础标识符=]。
             </p>
 
             <div class="note" title="标识符是上下文相关的">
               <p>
-                预期[=受控标识符文档=]中`id`引用的[=主体=]在时间上保持一致，以便任何使用它们的[=可验证凭证=]都可以被解释为引用同一实体。例如，建议[=可验证凭证=]的[=颁发者=]要求[=主体=]证明其对[=标识符=]的控制权，然后再颁发以该[=标识符=]为[=主体=]的凭证，从而确保每个以该[=标识符=]为[=主体=]的凭证的颁发都涉及同一实体。
+                预期[=受控标识符文档=]中`id`引用的[=主体=]在时间上保持一致，以便任何使用它们的<a data-cite="VC#dfn-vc">可验证凭证</a>都可以被解释为引用同一实体。例如，建议<a data-cite="VC#dfn-vc">可验证凭证</a>的<a data-cite="VC#dfn-issuers">颁发者</a>要求[=主体=]证明其对[=标识符=]的控制权，然后再颁发以该[=标识符=]为[=主体=]的凭证，从而确保每个以该[=标识符=]为[=主体=]的凭证的颁发都涉及同一实体。
               </p>
               <p>
-                然而，在某些情况下，这种做法可能是不可能或不合理的；例如，当父母为其子女请求[=可验证凭证=]时。此外，也可能存在[=颁发者=]犯错或故意发布虚假声明的情况。在评估对给定[=标识符=]的依赖的安全影响时，会考虑所有这���可能性。参见第[[[#identifier-ambiguity]]]节。
+                然而，在某些情况下，这种做法可能是不可能或不合理的；例如，当父母为其子女请求<a data-cite="VC#dfn-vc">可验证凭证</a>时。此外，也可能存在<a data-cite="VC#dfn-issuers">颁发者</a>犯错或故意发布虚假声明的情况。在评估对给定[=标识符=]的依赖的安全影响时，会考虑所有这种可能性。参见第[[[#identifier-ambiguity]]]节。
               </p>
             </div>
           </section>
 
           <section>
-  <h3>控制者</h3>
+  <h3 id="controllers">控制者</h3>
 
   <p>
     [=受控标识符文档=]的[=控制者=]是任何能够对该[=受控标识符文档=]进行更改的实体。能够更新通过解析控制者文档的规范 URL 返回的资源内容的任何人，按定义都是该文档及其规范标识符的控制者。满足[=受控标识符文档=]的[=验证方法=]的证明被视为对[=标识符=]的[=控制者=]创建这些[=证明=]的加密保证。
   </p>
 
   <p class="note" title="标识符控制者与文档控制者">
-    [=受控标识符文档=]的[=控制者=]被视为文档规范[=标识符=]的[=控制者=]，也称为其 URL。也就是说，能够更新[=受控标识符文档=]的人既是文档的[=控制者=]，也是[=标识符=]的[=控���者=]。更新文档是控制[=标识符=]的方式。这些术语可以互换使用。控制[=标识符=]的规范[=受控标识符文档=]等同于控制[=标识符=]。
+    [=受控标识符文档=]的[=控制者=]被视为文档规范[=标识符=]的[=控制者=]，也称为其 URL。也就是说，能够更新[=受控标识符文档=]的人既是文档的[=控制者=]，也是[=标识符=]的[=控制者=]。更新文档是控制[=标识符=]的方式。这些术语可以互换使用。控制[=标识符=]的规范[=受控标识符文档=]等同于控制[=标识符=]。
   </p>
 
   <dl>
@@ -690,7 +697,7 @@ table.simple tbody tr:last-of-type {
       `controller`属性是可选的。如果可以将文档的合法控制者表示为 URL，则文档应列出标识这些控制者的 URL。
 
       <p class="note" title="假定控制">
-        可以列出一个功能上由[=受控标识符文档=]的[=控制者=]以外的人控制的验证方法。例如，文档[=控制者=]可以将另一个方控制的公��设置为身份验证验证方法。这将使另一方能够代表该[=标识符=]进���身份验证（因为他们的公钥列在身份验证验证方法中），<em>而不会</em>使该方能够更新[=受控标识符文档=]。然而，由于文档[=控制者=]明确列出了该密钥用于身份验证，因此该证明被视为由文档[=控制者=]创建，因为它是由其明确指定的受托人创建的。这在“另一方”是文档控制者控制的设备但具有独立的加密权限（即，它有自己的密钥存储并可以生成[=证明=]）时特别有用。这种模式使不同的设备能够使用自己的加密材料生成可验证的[=证明=]，这些[=证明=]被视为由标识符的控制者创建的。
+        可以列出一个功能上由[=受控标识符文档=]的[=控制者=]以外的人控制的验证方法。例如，文档[=控制者=]可以将另一个方控制的公钥设置为身份验证验证方法。这将使另一方能够代表该[=标识符=]进行身份验证（因为他们的公钥列在身份验证验证方法中），<em>而不会</em>使该方能够更新[=受控标识符文档=]。然而，由于文档[=控制者=]明确列出了该密钥用于身份验证，因此该证明被视为由文档[=控制者=]创建，因为它是由其明确指定的受托人创建的。这在“另一方”是文档控制者控制的设备但具有独立的加密权限（即，它有自己的密钥存储并可以生成[=证明=]）时特别有用。这种模式使不同的设备能够使用自己的加密材料生成可验证的[=证明=]，这些[=证明=]被视为由标识符的控制者创建的。
       </p>
 
       如果存在，其值必须是一个<a data-cite="INFRA#string">字符串</a>或<a data-cite="INFRA#ordered-set">集合</a>，其中每个字符串都符合[[[URL]]]规则。
@@ -728,7 +735,7 @@ table.simple tbody tr:last-of-type {
   </p>
 </section>
         <section>
-            <h3>也称为</h3>
+            <h3 id="also-known-as">也称为</h3>
 
             <p>
 一个[=主体=]可以有多个标识符，这些标识符用于不同的目的或在不同的时间使用。可以使用`alsoKnownAs`属性声明两个或多个标识符（或其他类型的URI）指向同一个[=主体=]。
@@ -776,10 +783,10 @@ table.simple tbody tr:last-of-type {
           </section>
 
           <section>
-            <h2>服务</h2>
+            <h3 id="services">服务</h3>
 
             <p>
-[=服务=]在[=受���标识符文档=]中用于表达与[=控制者=]或相关实体就受控[=标识符=]进行通信的方式。[=服务=]可以是[=控制者=]希望宣传以供进一步发现、认证、授权或交互的任何类型的服务。
+[=服务=]在[=受控标识符文档=]中用于表达与[=控制者=]或相关实体就受控[=标识符=]进行通信的方式。[=服务=]可以是[=控制者=]希望宣传以供进一步发现、认证、授权或交互的任何类型的服务。
             </p>
 
             <p>
@@ -791,7 +798,7 @@ table.simple tbody tr:last-of-type {
             </p>
 
             <dl>
-              <dt><dfn>service</dfn></dt>
+              <dt><dfn data-lt="服务">service</dfn></dt>
               <dd>
                 <p>
 `service`属性是可选的。如果存在，关联的值必须是一个<a data-cite="INFRA#ordered-set">集合</a>，其中每个服务由一个<a data-cite="INFRA#ordered-map">映射</a>描述。每个[=服务=]<a data-cite="INFRA#ordered-map">映射</a>必须包含`id`、`type`和`serviceEndpoint`属性。每个服务扩展可以包括其他属性，并可以进一步限制与扩展相关的属性。
@@ -836,9 +843,9 @@ table.simple tbody tr:last-of-type {
         </section>
 
         <section>
-            <h2>验证方法</h2>
+            <h2 id="verification-methods">验证方法</h2>
             <p>
-                一个[=受控标识符文档=]可以表达[=验证方法=]，例如加密[=公钥=]，这些方法可用于验证[=证明=]，例如用于[=认证=]或授权与[=控制者=]或相关方的交互。例如，加密[=公钥=]可以作为<a>验证方法</a>用于数字签名；在这种用法中，它验证签名者能够使用关联的加密私钥。<a>验证方法</a>可能包含许多参数。例如，一组五个加密密钥中，任何三个都需要参与生成加密门限��名。
+                一个[=受控标识符文档=]可以表达[=验证方法=]，例如加密[=公钥=]，这些方法可用于验证[=证明=]，例如用于[=认证=]或授权与[=控制者=]或相关方的交互。例如，加密[=公钥=]可以作为<a>验证方法</a>用于数字签名；在这种用法中，它验证签名者能够使用关联的加密私钥。<a>验证方法</a>可能包含许多参数。例如，一组五个加密密钥中，任何三个都需要参与生成加密门限签名。
             </p>
 
             <p>
@@ -846,7 +853,7 @@ table.simple tbody tr:last-of-type {
             </p>
 
             <p>
-                在[=受控标识符文档=]中使用以下[=映射=]定义[=验证方法=]，并称之为<dfn>验证方法定义</dfn>：
+                在[=受控标识符文档=]中使用以下<a data-cite="INFRA#ordered-map">映射</a>定义[=验证方法=]，并称之为<dfn>验证方法定义</dfn>：
             </p>
 
             <dl>
@@ -875,7 +882,7 @@ table.simple tbody tr:last-of-type {
                         <dt id="defn-vm-expires">expires</dt>
                         <dd>
                             `expires`属性是可选的。
-                            如果提供，���值必须是[[XMLSCHEMA11-2]] `dateTimeStamp`字符串，指定该[=验证方法=]应停止使用的时间。一旦设置，该值通常不应更新，依赖该值的系统应在到期时间或之后不再验证与该[=验证方法=]相关的任何[=证明=]。
+                            如果提供，其值必须是[[XMLSCHEMA11-2]] `dateTimeStamp`字符串，指定该[=验证方法=]应停止使用的时间。一旦设置，该值通常不应更新，依赖该值的系统应在到期时间或之后不再验证与该[=验证方法=]相关的任何[=证明=]。
                         </dd>
                         <dt><dfn class="lint-ignore">revoked</dfn></dt>
                         <dd>
@@ -915,7 +922,7 @@ table.simple tbody tr:last-of-type {
           </pre>
 
         <p class="note" title="`controller` 属性被多个对象使用">
-          `controller` 属性被 [=受控标识符文档=] 使用（详见第[[[#controlled-identifier-documents]]]节）以及 [=验证方法=] 使用（详见第[[[#verification-methods]]]节）。在这两种情况下，其目的基本相同，即表示一��或多个被授权执行与其关联资源相关的某些操作的实体。
+          `controller` 属性被 [=受控标识符文档=] 使用（详见第[[[#controlled-identifier-documents]]]节）以及 [=验证方法=] 使用（详见第[[[#verification-methods]]]节）。在这两种情况下，其目的基本相同，即表示一个或多个被授权执行与其关联资源相关的某些操作的实体。
           然而，请注意，对于 [=验证方法=]，这仅是由 [=受控标识符文档=] 的 `controller` 声明的断言，而该断言不一定是真实的，即可能是错误的。
           为了确保 [=验证方法=] 与特定 [=controller=] 的绑定，必须从 [=验证方法=] 的表达式出发，找到其 [=受控标识符文档=]，然后验证后者是否同时包含对 [=验证方法=] 和其 [=controller=] 的引用。有关确保正确绑定的算法，请参见第[[[#retrieve-verification-method]]]节。
           </p>
@@ -927,10 +934,10 @@ table.simple tbody tr:last-of-type {
           </p>
 
          <section>
-            <h3>验证材料</h3>
+            <h3 id="verification-material">验证材料</h3>
 
             <p>
-验证材料是任何用于应用[=验证方法=]的过程的信��。[=验证方法=]的`type`通常��于确定其与这些过程的兼容性。[=���证方法=]的示例包括`JsonWebKey`和`Multikey`。[=加密套件=]规范负责指定[=验证方法=]的`type`及其相关的验证材料格式。有关使用验证材料的示例，请参见
+验证材料是任何用于应用[=验证方法=]的过程的信息。[=验证方法=]的`type`通常用于确定其与这些过程的兼容性。[=验证方法=]的示例包括`JsonWebKey`和`Multikey`。[=加密套件=]规范负责指定[=验证方法=]的`type`及其相关的验证材料格式。有关使用验证材料的示例，请参见
 <a href="https://www.w3.org/TR/vc-jose-cose/">使用 JOSE 和 COSE 保护可验证凭证</a>、
 <a href="https://www.w3.org/TR/vc-di-ecdsa/">数据完整性 ECDSA 加密套件</a>以及
 <a href="https://w3c-ccg.github.io/lds-ed25519-2020/">数据完整性 EdDSA 加密套件</a>。
@@ -941,7 +948,7 @@ table.simple tbody tr:last-of-type {
             </p>
 
             <p>
-[=验证方法=]不��包含针对同一材料的多个验证材料属性。例如，在[=验证方法=]中同时使用`publicKeyJwk`和`publicKeyMultibase`表达密钥材料是被禁止的。
+[=验证方法=]不得包含针对同一材料的多个验证材料属性。例如，在[=验证方法=]中同时使用`publicKeyJwk`和`publicKeyMultibase`表达密钥材料是被禁止的。
             </p>
 
             <p>
@@ -994,7 +1001,7 @@ table.simple tbody tr:last-of-type {
   <dl>
     <dt>type</dt>
     <dd>
-      `type`属性的值必须是一个[=字符串=]，并设置为`Multikey`。
+      `type`属性的值必须是一个<a data-cite="INFRA#string">字符串</a>，并设置为`Multikey`。
     </dd>
     <dt><dfn class="lint-ignore">publicKeyMultibase</dfn></dt>
     <dd>
@@ -1007,7 +1014,7 @@ table.simple tbody tr:last-of-type {
   </dl>
 
   <p>
-    下面的示例使用���述格式表达了一个Ed25519公钥：
+    下面的示例使用上述的格式表示了一个Ed25519公钥：
   </p>
 
   <pre class="example nohighlight" title="Ed25519公钥的多密钥编码">
@@ -1045,13 +1052,13 @@ table.simple tbody tr:last-of-type {
       <tr>
         <td>Ed25519 256位公钥</td>
         <td>
-          Ed25519公钥的编码必须以两字节前缀`0xed01`（`0xed`的变长整数表示）开头，后跟32字节的公钥���据。生成的34字节值必须按照第[[[#multibase-0]]]节的描述使用base-58-btc字母表编码，并在前面加���base-58-btc多基值头部（`z`）。
+          Ed25519公钥的编码必须以两字节前缀`0xed01`（`0xed`的变长整数表示）开头，后跟32字节的公钥数据。生成的34字节值必须按照第[[[#multibase-0]]]节的描述使用base-58-btc字母表编码，并在前面加上base-58-btc多基值头部（`z`）。
         </td>
       </tr>
       <tr>
         <td>BLS12-381 381位公钥</td>
         <td>
-          G2组中的BLS12-381公钥的编码必须以两字节前缀`0xeb01`（`0xeb`的变长整数表示）开头，后跟96字节的压缩公钥数据。生成的98字节值必须按照第[[[#multibase-0]]]节的描述使用base-58-btc字母表编码，并在前面加上base-58-btc多基值头��（`z`）。
+          G2组中的BLS12-381公钥的编码必须以两字节前缀`0xeb01`（`0xeb`的变长整数表示）开头，后跟96字节的压缩公钥数据。生成的98字节值必须按照第[[[#multibase-0]]]节的描述使用base-58-btc字母表编码，并在前面加上base-58-btc多基值头部（`z`）。
         </td>
       </tr>
       <tr>
@@ -1127,7 +1134,7 @@ table.simple tbody tr:last-of-type {
   <dl>
     <dt>type</dt>
     <dd>
-      `type` 属性的值必须是一个[=字符串=]，并设置为 `JsonWebKey`。
+      `type` 属性的值必须是一个<a data-cite="INFRA#string">字符串</a>，并设置为 `JsonWebKey`。
     </dd>
     <dt><dfn class="lint-ignore">publicKeyJwk</dfn></dt>
     <dd>
@@ -1230,14 +1237,14 @@ table.simple tbody tr:last-of-type {
         </section>
 
         <section>
-          <h2>验证关系</h2>
+          <h2 id="verification-relationships">验证关系</h2>
 
           <p>
           [=验证关系=] 是一种表达方式，用于指定一个或多个 [=验证方法=] 被授权代表主体验证 [=证明=]。
           </p>
 
           <p>
-          不同的 [=验证关系=] 允许关联的 [=验证方法=] 用于不同的目的。由 [=验证者=] 确定验证尝试的有效性，方法是检查所使用的 [=验证方法=] 是否在 [=受控标识符文档=] 中被适当的 [=验证关系=] 属性引用。
+          不同的 [=验证关系=] 允许关联的 [=验证方法=] 用于不同的目的。由 <a data-cite="VC#dfn-verifier">验证者</a> 确定验证尝试的有效性，方法是检查所使用的 [=验证方法=] 是否在 [=受控标识符文档=] 中被适当的 [=验证关系=] 属性引用。
           </p>
 
           <p>
@@ -1253,7 +1260,7 @@ table.simple tbody tr:last-of-type {
           </p>
 
           <section>
-            <h2>身份验证</h2>
+            <h2 id="authentication">身份验证</h2>
 
             <p>
           `authentication` [=验证关系=] 用于指定如何对 [=主体=] 进行 [=身份验证=]，例如登录网站或参与任何形式的质询-响应协议。身份验证后的处理是特定于应用程序的。
@@ -1266,7 +1273,7 @@ table.simple tbody tr:last-of-type {
               </dd>
             </dl>
 
-            <pre class="example nohighlight" title="包含三个验证方法��身份验证属性">
+            <pre class="example nohighlight" title="包含三个验证方法的身份验证属性">
           {
             "@context": "https://www.w3.org/ns/cid/v1",
             "id": "https://controller.example/123456789abcdefghi",
@@ -1306,7 +1313,7 @@ table.simple tbody tr:last-of-type {
           </section>
 
           <section>
-            <h2>断言</h2>
+            <h2 id="assertion">断言</h2>
 
             <p>
           `assertionMethod` [=验证关系=] 用于指定 [=控制者=] 授权用于表达断言或声明（例如在可验证凭证中）的 [=验证方法=]。
@@ -1344,7 +1351,7 @@ table.simple tbody tr:last-of-type {
             </pre>
           </section>
    <section>
-     <h2>密钥协商</h2>
+     <h2 id="key-agreement">密钥协商</h2>
 
      <p>
    `keyAgreement` [=验证关系=] 用于指定实体如何执行加密，以便传输给 [=控制者=] 的机密信息，例如用于与接收方建立安全通信通道。
@@ -1394,7 +1401,7 @@ table.simple tbody tr:last-of-type {
    </section>
 
    <section>
-     <h2>能力调用</h2>
+     <h2 id="capability-invocation">能力调用</h2>
 
      <p>
    `capabilityInvocation` [=验证关系=] 用于指定 [=控制者=] 可能使用的 [=验证方法=]，以调用加密能力，例如授权更新 [=受控标识符文档=]。
@@ -1420,7 +1427,7 @@ table.simple tbody tr:last-of-type {
      "id": "https://controller.example/123456789abcdefghi",
      <span class="comment">...</span>
      "capabilityInvocation": [
-       <span class="comment">// 此方法可用���调用能力 https:...fghi</span>
+       <span class="comment">// 此方法可用于调用能力 https:...fghi</span>
        "https://controller.example/123456789abcdefghi#keys-1",
        <span class="comment">// 此方法仅被批准用于能力调用；它不会</span>
        <span class="comment">// 用于任何其他验证关系，因此其完整描述</span>
@@ -1437,7 +1444,7 @@ table.simple tbody tr:last-of-type {
      </pre>
    </section>
         <section>
-            <h2>能力委托</h2>
+            <h2 id="capability-delegation">能力委托</h2>
 
             <p>
           `capabilityDelegation` [=验证关系=] 用于指定一种机制，该机制可能被用来将加密能力委托给其他方。此机制（例如<a href="https://w3c-ccg.github.io/zcap-spec/">授权能力</a>或<a href="https://github.com/ucan-wg/spec/blob/main/README.md">UCAN</a>）以及委托后的处理（例如访问特定的 HTTP API）是特定于应用程序的。
@@ -1494,15 +1501,15 @@ table.simple tbody tr:last-of-type {
   <p>
     多基值编码 (Multibase) 值将二进制值编码为
     <a href="https://en.wikipedia.org/wiki/Binary-to-text_encoding">基于文本的编码字符串</a>。
-    该值以单个字符的头部开始��用于标识编码的基数和用于编码二进制值的字母表，
+    该值以单个字符的头部开始，用于标识编码的基数和用于编码二进制值的字母表，
     后跟使用该基数和字母表编码的二进制值。以下列出的常见
-    <dfn class="export">Multibase 头部</dfn>值及其相关的基数编码字母表是规范性的：
+    <dfn class="export">Multibase头</dfn>值及其相关的基数编码字母表是规范性的：
   </p>
 
   <table class="simple">
     <thead>
       <tr>
-        <th>Multibase&nbsp;头部</th>
+        <th>Multibase头</th>
         <th>描述</th>
       </tr>
     </thead>
@@ -1531,16 +1538,16 @@ table.simple tbody tr:last-of-type {
 
   <p>
     要将二进制值基于编码为 Multibase 字符串，实现必须对二进制值应用第[[[#base-encode]]]节中的算法，
-    使用上表中所需的基数编码和字母表，并确保在结果前添加上表中关联的 Multibase 头部。
+    使用上表中所需的基数编码和字母表，并确保在结果前添加上表中关联的 Multibase头。
     可以使用任何具有等效输出的算法。
   </p>
 
   <p>
-    要对 Multibase 字符串进行基于解码，实现必须对第一个字符（Multibase 头部）之后的字符串应用第[[[#base-decode]]]节中的算法，
-    使用与 Multibase 头部关联的字��表。可以使用任何具有等效输出的算法。
+    要对 Multibase 字符串进行基于解码，实现必须对第一个字符（Multibase头）之后的字符串应用第[[[#base-decode]]]节中的算法，
+    使用与 Multibase头关联的字符表。可以使用任何具有等效输出的算法。
   </p>
 </section>
-    <section>
+   <section>
   <h2>多哈希 (Multihash)</h2>
 
   <p>
@@ -1603,14 +1610,14 @@ table.simple tbody tr:last-of-type {
       </section>
 
     <section>
-      <h2>算法</h2>
+      <h2 id="algorithms">算法</h2>
 
       <p>
-      本节定义了本规范使用的算法，包括以下内容的说明：如何进行基值编码和解码；如何安全地检索验证方法；如何检索文档片段；以及如何通过 HTTP 通��生成处理错误的描述。可以使用本节提供的算法的替代方法，只要替代算法的输出保持一致即可。
+      本节定义了本规范使用的算法，包括以下内容的说明：如何进行基值编码和解码；如何安全地检索验证方法；如何检索文档片段；以及如何通过 HTTP 通道生成处理错误的描述。可以使用本节提供的算法的替代方法，只要替代算法的输出保持一致即可。
       </p>
 
       <section class="normative">
-        <h2>基值编码</h2>
+        <h2 id="base-encode">基值编码</h2>
 
         <p>
       以下算法指定了如何将字节数组（其中每个字节表示一个基于 256 的值）编码为使用特定基数字母表的不同基数表示形式，例如 base-64-url-no-pad 或 base-58-btc。所需的输入包括 <var>bytes</var>、<var>targetBase</var> 和 <var>baseAlphabet</var>。输出是一个包含基值编码结果的字符串。所有数学运算必须使用整数算术执行。
@@ -1618,13 +1625,13 @@ table.simple tbody tr:last-of-type {
 
         <ol class="algorithm">
           <li>
-      初始化以下变量：将 <var>zeroes</var> 设置为 `0`，<var>length</var> 设��为 `0`，<var>begin</var> 设置为 `0`���<var>end</var> 设置为 <var>bytes</var> 的长度。
+      初始化以下变量：将 <var>zeroes</var> 设置为 `0`，<var>length</var> 设置为 `0`，<var>begin</var> 设置为 `0`，<var>end</var> 设置为 <var>bytes</var> 的长度。
           </li>
           <li>
       将 <var>begin</var> 和 <var>zeroes</var> 设置为 <var>bytes</var> 中前导 `0` 字节值的数量。
           </li>
           <li>
-      将 <var>baseValue</var> 设置��空字节数组，其大小为最终基值扩展值的大小。通过将 log(256) 除以 log(<var>targetBase</var>)，然后乘以 <var>bytes</var> 的长度减去前导 <var>zeroes</var> 来计算 <var>baseValue</var> 的最终 <var>size</var>。将 `1` 添加到 <var>size</var> 的值中。
+      将 <var>baseValue</var> 设置成空字节数组，其大小为最终基值扩展值的大小。通过将 log(256) 除以 log(<var>targetBase</var>)，然后乘以 <var>bytes</var> 的长度减去前导 <var>zeroes</var> 来计算 <var>baseValue</var> 的最终 <var>size</var>。将 `1` 添加到 <var>size</var> 的值中。
           </li>
           <li>
       从偏移量 <var>begin</var> 开始，按顺序处理 <var>bytes</var> 中的每个字节 <var>byte</var>：
@@ -1667,7 +1674,7 @@ table.simple tbody tr:last-of-type {
       返回 <var>baseEncoding</var> 作为基值编码结果。
           </li>
         </ol>
-      </section>
+
         <pre class="example" title="上面通用基值编码算法的 JavaScript 实现">
         function baseEncode(bytes, targetBase, baseAlphabet) {
           let zeroes = 0;
@@ -1723,10 +1730,10 @@ table.simple tbody tr:last-of-type {
       </section>
 
      <section class="normative">
-  <h2>基值解码</h2>
+  <h2 id="base-decode">基值解码</h2>
 
   <p>
-以下算法指定了如何将字节数组解码为不同的基数表示形式，其中每个字节表示一个基值编码的值，并使用特定的基数字母表，例如 base-64-url-no-pad 或 base-58-btc���所需的输入包括 <var>sourceEncoding</var>、<var>sourceBase</var> 和 <var>baseAlphabet</var>。输出是一个包含基值解码结果的字节数组。所有数学运算必须使用整数算术执行。
+以下算法指定了如何将字节数组解码为不同的基数表示形式，其中每个字节表示一个基值编码的值，并使用特定的基数字母表，例如 base-64-url-no-pad 或 base-58-btc所需的输入包括 <var>sourceEncoding</var>、<var>sourceBase</var> 和 <var>baseAlphabet</var>。输出是一个包含基值解码结果的字节数组。所有数学运算必须使用整数算术执行。
   </p>
 
   <ol class="algorithm">
@@ -1755,7 +1762,7 @@ table.simple tbody tr:last-of-type {
 将 <var>sourceBase</var> 乘以 <var>decodedBytes</var>[<var>byteOffset</var>] 的结果加到 <var>carry</var>。
             </li>
             <li>
-将 <var>carry</var> 除以 `256` 的余数设置为 <var>decodedBytes</var>[<var>byteOffset</var>] ��值。
+将 <var>carry</var> 除以 `256` 的余数设置为 <var>decodedBytes</var>[<var>byteOffset</var>] 的值。
             </li>
             <li>
 将 <var>carry</var> 设置为 <var>carry</var> 除以 `256` 的商，确保使用整数除法执行该操作。
@@ -1842,7 +1849,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
 
 </section>
      <section class="normative">
-  <h3>检索验证方法</h3>
+  <h3 id="retrieve-verification-method">检索验证方法</h3>
 
   <p>
 以下算法指定了如何通过使用[=验证方法标识符=]安全地检索验证方法，例如加密[=公钥=]。所需的输入包括一个<strong>[=验证方法标识符=]</strong>（<var>vmIdentifier</var>）、一个<strong>[=验证关系=]</strong>（<var>verificationRelationship</var>）以及一组<strong>解引用选项</strong>（<var>options</var>）。输出是一个<strong>[=验证方法=]</strong>。
@@ -1936,10 +1943,10 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
   </p>
 </section>
      <section class="normative">
-             <h2>片段解析</h2>
+             <h2 id="fragment-resolution">片段解析</h2>
 
              <p>
-     以下算法指定了如何检索包含给定片段标识符的文档部分。所需的输入是一个[=受控标识符文档=]（[=映射=] <var>document</var>）和一个片段标识符（[=字符串=] <var>fragmentIdentifier</var>）。输出是一个包含文档片段的[=映射=]。
+     以下算法指定了如何检索包含给定片段标识符的文档部分。所需的输入是一个[=受控标识符文档=]（<a data-cite="INFRA#ordered-map">映射</a> <var>document</var>）和一个片段标识符（<a data-cite="INFRA#string">字符串</a> <var>fragmentIdentifier</var>）。输出是一个包含文档片段的<a data-cite="INFRA#ordered-map">映射</a>。
              </p>
 
              <ol class="algorithm">
@@ -1953,7 +1960,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
      将 <var>fullyQualifiedFragment</var> 设置为 <var>canonicalDocumentUrl</var> 加上 <var>fragmentIdentifier</var> 的值。
                </li>
                <li>
-     递归处理 <var>document</var> 中的每个[=映射=]，检查其 `id` 值是否等于 <var>fullyQualifiedFragment</var> 或 <var>fragmentIdentifier</var>。如果找到匹配项，将 <var>documentFragment</var> 设置为匹配的[=映射=]，并停止递归处理。
+     递归处理 <var>document</var> 中的每个<a data-cite="INFRA#ordered-map">映射</a>，检查其 `id` 值是否等于 <var>fullyQualifiedFragment</var> 或 <var>fragmentIdentifier</var>。如果找到匹配项，将 <var>documentFragment</var> 设置为匹配的<a data-cite="INFRA#ordered-map">映射</a>，并停止递归处理。
                </li>
                <li>
      返回 <var>documentFragment</var>。
@@ -1974,7 +1981,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
              </p>
 
              <p>
-     当通过 HTTP 接口公开这些错误时，实施者应使用 [[RFC9457]] ��编码错误数据结构。如果使用 [[RFC9457]]：
+     当通过 HTTP 接口公开这些错误时，实施者应使用 [[RFC9457]] 编码错误数据结构。如果使用 [[RFC9457]]：
              </p>
 
              <ul>
@@ -1992,7 +1999,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
              <dl>
                <dt id="INVALID_VERIFICATION_METHOD_URL">INVALID_VERIFICATION_METHOD_URL</dt>
                <dd>
-     [=证���=] 中的 `verificationMethod` 值格式错误。参见第 [[[#retrieve-verification-method]]] 节。
+     [=证明=] 中的 `verificationMethod` 值格式错误。参见第 [[[#retrieve-verification-method]]] 节。
                </dd>
                <dt id="INVALID_CONTROLLED_IDENTIFIER_DOCUMENT_ID">INVALID_CONTROLLED_IDENTIFIER_DOCUMENT_ID</dt>
                <dd>
@@ -2015,13 +2022,13 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
     </section>
 
    <section>
-        <h2>上下文和词汇表</h2>
+        <h2 id="contexts-and-vocabularies">上下文和词汇表</h2>
 
         <section>
-          <h2>词汇表</h2>
+          <h2 id="vocabulary">词汇表</h2>
           <p>
             本规范中定义的术语也是
-            RDF <a data-cite="RDF-CONCEPTS#vocabularies">词���命名空间</a> [[RDF-CONCEPTS]]
+            RDF <a data-cite="RDF-CONCEPTS#vocabularies">词汇命名空间</a> [[RDF-CONCEPTS]]
             <a href="https://w3id.org/security">https://w3id.org/security#</a> 的一部分。
             对于任何 `TERM`，相关的 URL 形式为
             `https://w3id.org/security#TERM` 或 `https://w3id.org/security#TERMmethod`。
@@ -2098,7 +2105,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
 
           <table class="simple">
             <thead>
-              <th>上���文 URL 和哈希值</th>
+              <th>上下文 URL 和哈希值</th>
             </thead>
             <tbody>
               <tr>
@@ -2118,7 +2125,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
           </p>
 
           <p>
-            上述 JSON-LD 上下文解析的安全词汇表术语��于
+            上述 JSON-LD 上下文解析的安全词汇表术语位于
             <a href="https://w3id.org/security">https://w3id.org/security#</a>
             命名空间中。有关更多详细信息，请参见 [[[#vocabulary]]]。
           </p>
@@ -2169,7 +2176,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
             <p>
   不打算使用 JSON-LD 的实现可以选择不在文档的顶层包含 `@context` 声明。
   无论是否使用 `@context` 值或 JSON-LD 处理器，
-  [=符合文档=] 中表达的所有属性和值的语义在 [=符合处理器=] 中是相同的。
+  [=符合规范的文档=] 中表达的所有属性和值的语义在 [=符合规范的处理器=] 中是相同的。
   在两种模式下处理的文档之间的语义差异是实现或规范的错误。
             </p>
 
@@ -2205,7 +2212,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
             </dd>
             <dt>词汇空间</dt>
             <dd>
-  任何以 [=Multibase 头=] 开头且其余字符由相应基数编码字母表中的允许字符组成的字符串。
+  任何以 [=Multibase头=] 开头且其余字符由相应基数编码字母表中的允许字符组成的字符串。
             </dd>
             <dt>值空间</dt>
             <dd>
@@ -2213,7 +2220,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
             </dd>
             <dt>词汇到值的映射</dt>
             <dd>
-  词汇空间的任何元素通过基于词汇字符串中第一个 [=Multibase 头=] 关联的基数解码字母表进行基数解码映射到值空间。
+  词汇空间的任何元素通过基于词汇字符串中第一个 [=Multibase头=] 关联的基数解码字母表进行基数解码映射到值空间。
             </dd>
             <dt>规范映射</dt>
             <dd>
@@ -2227,7 +2234,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
     </section>
 
   <section class="informative">
-   <h1>安全注意事项</h1>
+   <h1 id="security-considerations">安全注意事项</h1>
 
    <p>
    本节包含了一些使用本规范的人员在将此技术部署到生产环境之前需要考虑的安全注意事项。本文件中描述的技术设计旨在符合许多 IETF 标准使用的威胁模型，并记录在 [[?RFC3552]] 中。本节详细说明了 [[?RFC3552]] 中的一些注意事项，以及本规范独有的其他注意事项。
@@ -2260,18 +2267,18 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
        </p>
 
        <p>
-   将标识符绑定到物理世界中的某些事物（例如个人或组织）的过程，例如通过使用与该标识符具有相同主体的<a>可验证凭证</a>，在本规范中有所考虑，并在[[[?VC-DATA-MODEL-2.0]]]中进一步定义。
+   将标识符绑定到物理世界中的某些事物（例如个人或组织）的过程，例如通过使用与该标识符具有相同主体的<a data-cite="VC#dfn-vc">可验证凭证</a>，在本规范中有所考虑，并在[[[?VC-DATA-MODEL-2.0]]]中进一步定义。
        </p>
      </section>
    </section>
  <section>
-  <h2>标识符的歧义性</h2>
+  <h2 id="identifier-ambiguity">标识符的歧义性</h2>
   <p>
     即使由[=标识符=]引用的[=主体=]证明了控制权，对[=主体=]的解释仍然是上下文相关的，并且可能存在歧义。
   </p>
 
   <p>
-    例如，一所学校可能会为《计算机科学导论》的教师颁发一份[=可验证凭证=]，使用
+    例如，一所学校可能会为《计算机科学导论》的教师颁发一份<a data-cite="VC#dfn-vc">可验证凭证</a>，使用
     `https://controller.example/abc` 作为[=主体=]的[=标识符=]，声明
     "`https://controller.example/abc` 是《计算机科学导论》的教师"，
     并且 "`https://controller.example/abc` 控制对学校计算机实验室的访问。请找他们申请访问权限"。
@@ -2306,11 +2313,11 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
   </p>
 
   <p>
-    这种挑战在[=主体=]在颁发[=可验证凭证=]的过程中基本上未参与的情况下尤其困难。例如，学校可能使用一个[=标识符=]来指代一位教师，而学生或家长可能使用该[=标识符=]来对教师发表声明，而教师或学校都未参与其中。在这些情况下，很容易想象学校的意图（例如“任何当前的计算机科学课程教师”）的细微差别被忽略，而[=标识符=]被家长和学生误用来指代某个特定的教师，很可能是在学校或教师都不知道的情况下进行的对话中。
+    这种挑战在[=主体=]在颁发<a data-cite="VC#dfn-vc">可验证凭证</a>的过程中基本上未参与的情况下尤其困难。例如，学校可能使用一个[=标识符=]来指代一位教师，而学生或家长可能使用该[=标识符=]来对教师发表声明，而教师或学校都未参与其中。在这些情况下，很容易想象学校的意图（例如“任何当前的计算机科学课程教师”）的细微差别被忽略，而[=标识符=]被家长和学生误用来指代某个特定的教师，很可能是在学校或教师都不知道的情况下进行的对话中。
   </p>
 
   <p>
-    在自然语言中，这些歧义通常很容易被忽略或纠正。在数字媒体中，评估上下文以确定预期的指代对象至关重要，特别是当[=标识符=]在不同的上下文中被不同的[=颁发者=]使用时，例如在学校的官方网页上由学校使用，但在非官方的社交网络应用中由家长和学生使用。
+    在自然语言中，这些歧义通常很容易被忽略或纠正。在数字媒体中，评估上下文以确定预期的指代对象至关重要，特别是当[=标识符=]在不同的上下文中被不同的<a data-cite="VC#dfn-issuers">颁发者</a>使用时，例如在学校的官方网页上由学校使用，但在非官方的社交网络应用中由家长和学生使用。
   </p>
 
   <p>
@@ -2458,12 +2465,12 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
        </section>
 
        <section>
-         <h2>受控标识符文档中的加密数据</h2>
+         <h2 id="encrypted-data-in-controlled-identifier-documents">受控标识符文档中的加密数据</h2>
          <p>
    由于密码学和计算能力的进步，加密算法可能会失效。建议实现者假设放置在[=受控标识符文档=]中的任何加密数据最终可能会以明文形式提供给与加密数据可访问的相同受众。这一点在[=受控标识符文档=]是公开的情况下尤为重要。
          </p>
          <p>
-   对[=受控标识符文档=]的全部或部分进行加密并<em>不是</em>一种长期保护数据的适当手段。同样，将加密数据放置在[=受控标���符文档=]中也不是保护个人数据的适��手段。
+   对[=受控标识符文档=]的全部或部分进行加密并<em>不是</em>一种长期保护数据的适当手段。同样，将加密数据放置在[=受控标识符文档=]中也不是保护个人数据的适��手段。
          </p>
          <p>
    鉴于上述警告，如果在[=受控标识符文档=]中包含加密数据，建议实现者不要关联任何可关联的信息，这些信息可能被用来推断加密数据与相关方之间的关系。可关联信息的示例包括接收方的公钥、已知由接收方控制的数字资产标识符或接收方的可读描述。
@@ -2472,7 +2479,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
        </section>
 
        <section>
-         <h2>内容完整性保护</h2>
+         <h2 id="content-integrity-protection">内容完整性保护</h2>
          <p>
    [=受控标识符文档=]中包含的指向外部机器可读内容（如图像、网页或模式）的链接容易受到篡改的影响。强烈建议使用机制保护相关资源的完整性，例如[[[?VC-DATA-MODEL-2.0]]]规范中描述的那些。如果无法保护外部链接的完整性，并且[=受控标识符文档=]的完整性依赖于外部链接，则应避免使用外部链接。
          </p>
@@ -2482,7 +2489,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
        </section>
 
        <section>
-         <h2>控制者的完整性保护</h2>
+         <h2 id="integrity-protection-of-controllers">控制者的完整性保护</h2>
 
          <p>
    如[[[#controllers]]]部分所述，本规范包括一种机制，通过使用 `controller` 属性，将[=受控标识符文档=]的更改控制权委托给在外部[=受控标识符文档=]中描述的实体。
@@ -2526,7 +2533,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
       </section>
 
       <section>
-        <h2>用于认证和授权的服务端点</h2>
+        <h2 id="service-endpoints-for-authentication-and-authorization">用于认证和授权的服务端点</h2>
 
         <p>
   如果[=受控标识符文档=]发布了用于[=主体=]认证或授权的[=服务=]（参见[[[#services]]]节），那么[=服务=]提供者、[=主体=]和/或请求方有责任遵守该[=服务=]端点支持的认证和/或授权协议的要求。
@@ -2535,14 +2542,14 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
   </section>
 
   <section class="informative">
-    <h1>隐私注意事项</h1>
+    <h1 id="privacy-considerations">隐私注意事项</h1>
 
     <p>
 由于[=受控标识符文档=]旨在由[=控制者=]直接管理，因此将隐私设计原则[[PRIVACY-BY-DESIGN]]应用于[=受控标识符文档=]的所有方面至关重要。这些原则的全部七项已贯穿本规范的开发过程。本规范的设计不假设存在注册机构、托管公司或其他中介服务提供商来推荐或应用额外的隐私保护措施。本规范中的隐私是预防性的，而非补救性的，并且是嵌入式的默认设置。以下部分涵盖了实施者在构建利用[=受控标识符文档=]的系统时可能发现有用的隐私注意事项。
     </p>
 
     <section>
-      <h2>保持个人数据的私密性</h2>
+      <h2 id="keep-personal-data-private">保持个人数据的私密性</h2>
 
       <p>
 如果[=受控标识符文档=]是关于特定个人且面向公众的，那么确保[=受控标识符文档=]中不包含任何个人生物特征或传记数据是<em>至关重要的</em>。虽然个人数据可能包括伪匿名信息，例如公开的加密密钥或IP地址，但发布此类信息不会像在[=受控标识符文档=]中发布个人的全名、个人照片或社交媒体账户那样立即带来隐私风险。更好的替代方案是通过其他方式传输此类个人数据，例如可验证凭证[[?VC-DATA-MODEL-2.0]]或通过私密和安全的通信渠道发送的其他数据格式。
@@ -2561,7 +2568,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
     </section>
 
     <section>
-      <h2>标识符关联风险</h2>
+      <h2 id="identifier-correlation-risks">标识符关联风险</h2>
 
       <p>
 标识符可能被用于不必要的关联。[=控制者=]可以通过使用[=配对标识符=]来减轻这种隐私风险，这些标识符对每个关系或交互域都是唯一的；实际上，每个标识符都充当了一个化名。只有在明确需要跨上下文关联时，[=配对标识符=]才需要与多个方共享。如果[=配对标识符=]是默认设置，那么只有在[=控制者=]和/或[=主体=]明确希望在交互域之间进行公开标识和关联时，才需要公开发布标识符或与多个方共享。
@@ -2569,7 +2576,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
     </section>
 
     <section>
-      <h2>受控标识符文档的关联风险</h2>
+      <h2 id="controlled-identifier-document-correlation-risks">受控标识符文档的关联风险</h2>
 
       <p>
 如果相应[=受控标识符文档=]中的数据可以被关联，[=配对标识符=]的反关联保护将很容易被破坏。例如，在多个[=受控标识符文档=]中使用相同的[=验证方法=]可能提供与使用相同标识符一样多的关联信息。因此，[=配对标识符=]的[=受控标识符文档=]也需要使用配对唯一的信息，例如确保[=验证方法=]对配对关系是唯一的。
@@ -2595,12 +2602,12 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
     </section>
 
     <section>
-      <h2>服务隐私</h2>
+      <h2 id="service-privacy">服务隐私</h2>
       <p>
 [=控制者=]能够在[=受控标识符文档=]中选择性地表达至少一个[=服务=]，这增加了他们的控制权和自主权。[=受控标识符文档=]中的每个额外端点都会增加隐私风险，这可能是由于端点描述之间的关联，或者因为[=服务=]未受授权机制保护，或者两者兼而有之。
       </p>
       <p>
-[=受控标识符文档=]通常是公开的，并且由于它们是标准化的，将被高效地存储和索引。如果[=受控标识符文档=]发布到不可变的[=可验证数据注册表=]中，这种风险会增加。通过URL引用的[=受控标识符文档=]历史记录的访问使得通过标准化的使用进行流量分析变得更加高效。
+[=受控标识符文档=]通常是公开的，并且由于它们是标准化的，将被高效地存储和索引。如果[=受控标识符文档=]发布到不可变的<a data-cite="VC#dfn-verifiable-data-registries">可验证数据注册表</a>中，这种风险会增加。通过URL引用的[=受控标识符文档=]历史记录的访问使得通过标准化的使用进行流量分析变得更加高效。
       </p>
       <p>
 在一个[=受控标识符文档=]中包含多个[=服务=]所导致的额外隐私风险的程度可能难以估计。隐私危害通常是意外后果。URL可以引用文档、[=服务=]、模式以及可能与个人、家庭、俱乐部和雇主相关的其他内容——它们的[=服务=]之间的关联可能成为一种强大的监控和推断工具。这种潜在危害的一个例子是，当多个常见的国家级顶级域名（如`https://example.co.uk`）被使用时，可能以更高的概率推断出[=主体=]的大致位置。
@@ -2618,7 +2625,7 @@ function baseDecode(sourceEncoding, sourceBase, baseAlphabet) {
         <h2>呈现时间值</h2>
         <p>
 本规范支持表达与[=证明=]有效期相关的日期和时间。如果处理[=证明=]时发现其超出了允许的时间范围，这些信息可能会间接暴露给个人。在向个人展示这些日期和时间时，建议实现者考虑
-<a data-cite="?VC-DATA-MODEL-2.0#representing-time">文化规范和区域设置</a>，以便在显示软件中表示日期和时间。除了这些考虑之外���以减轻接收信息的个人的认知负��的方式呈现时间值是一种建议的最佳实践。
+<a data-cite="?VC-DATA-MODEL-2.0#representing-time">文化规范和区域设置</a>，以便在显示软件中表示日期和时间。除了这些考虑之外，以减轻接收信息的个人的认知负担的方式呈现时间值是一种建议的最佳实践。
         </p>
         <p>
 例如，在传达某组数字签名信息的过期时间时，建议实现者使用更易于理解的语言，而不是优化准确性的语言。将过期时间表示为“此票据已于三天前过期。”比“此票据于 2023 年 7 月 25 日下午 3:43 过期。”更为优选。前者提供了一个相对时间，更容易理解，而后者需要个人在脑海中进行计算，并假设他们能够进行这样的计算。
@@ -2940,7 +2947,7 @@ W3C 可验证凭证工作组
       </p>
 
       <p>
-      工作组对促成本规范创建的工作表示由衷的感谢，并向那些在技术和规范上深刻影响我们工作的个人致以诚挚的��意。特别是，这包括 Phil Zimmerman、Jon Callas、Lutz Donnerhacke、Hal Finney、David Shaw 和 Rodney Thayer 在 1990 年代和 2000 年代对
+      工作组对促成本规范创建的工作表示由衷的感谢，并向那些在技术和规范上深刻影响我们工作的个人致以诚挚的敬意。特别是，这包括 Phil Zimmerman、Jon Callas、Lutz Donnerhacke、Hal Finney、David Shaw 和 Rodney Thayer 在 1990 年代和 2000 年代对
       <a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy">Pretty Good Privacy (PGP)</a> 的工作。
       </p>
 
